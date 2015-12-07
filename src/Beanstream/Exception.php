@@ -68,4 +68,16 @@ class ConnectorException extends Exception {}
 /**
  * ApiException class
  */
-class ApiException extends Exception {}
+class ApiException extends Exception {
+	protected $response;
+
+	public function __construct($message, $code = 0, $response = null) {
+		$this->response = $response;
+
+		parent::__construct($message, $code);
+	}
+
+	public function getResponse() {
+		return $this->response;
+	}
+}

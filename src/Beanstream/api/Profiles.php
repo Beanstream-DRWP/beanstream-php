@@ -155,11 +155,7 @@ class Profiles {
 		//process as is
 		$result = $this->_connector->processTransaction('POST', $endpoint, $data);
 		
-        /*
-         * XXX it would be more appropriate to return newly added card_id,
-         * but API does not return it in result
-         */
-        return TRUE;
+         return $result['code'];
     }
 	
     /**

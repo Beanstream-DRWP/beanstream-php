@@ -139,6 +139,26 @@ class Profiles {
     }
 
     /**
+     * getCard() function - Retrieve a particular card in a profile
+     * @link http://developer.beanstream.com/documentation/tokenize-payments/retrieve-cards-profile/
+     *
+     * @param string $profile_id Profile Id
+     * @param string $card_id Card Id
+     * @return array Cards data
+     */
+    public function getCard($profile_id, $card_id) {
+
+        //get this profile's cards endpoint
+        $endpoint =  $this->_endpoint->getCardURI($profile_id);
+
+        //process as is
+        $result = $this->_connector->processTransaction('GET', $endpoint, NULL);
+
+        //return cards
+        return $result;
+    }
+
+    /**
      * addCard() function - Add a card to a profile
      * @link http://developer.beanstream.com/documentation/tokenize-payments/add-card-profile/
      * 

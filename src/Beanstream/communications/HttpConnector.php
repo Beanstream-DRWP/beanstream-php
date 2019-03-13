@@ -115,7 +115,24 @@ class HttpConnector {
         
 		//check for return errors from the API
         if (isset($res['code']) && 1 < $res['code'] && !($req['http_code'] >= 200 && $req['http_code'] < 300)) {
-            throw new ApiException($res['message'], $res['code']);
+            // Store the base exception message to return
+            $messageText = $res['message'];
+
+            // If there any any details messages, return them to the caller.
+            if (count($res["details"]))
+            {
+                $messageText .= " (";
+                foreach ($res["details"] as $idx => $message) {
+                    $messageText .= $message["message"];
+                    $messageText .=  ", ";
+                }
+
+                // Remove trailing comma
+                $messageText = rtrim($messageText, ", ");
+                $messageText .= ")";
+
+            }
+            throw new ApiException($messageText, $res['code']);
         }
         
         return $res;
